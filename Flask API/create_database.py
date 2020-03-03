@@ -12,6 +12,9 @@ conn.autocommit = True
 
 cursor = conn.cursor()
 
+#conn.cursor().execute("DROP DATABASE testdb;")
+#conn.commit()
+
 create_database = 'CREATE DATABASE testdb;'
 
 cursor.execute(create_database)

@@ -2,7 +2,7 @@ from models import Employee
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 update_employee_string = 'UPDATE employees SET name=%s, address=%s, phone_number=%s, date=%s, status=%s where id=%s;'
-insert_employee_string = 'INSERT INTO employees (name, address, phone_number, date, status) values (%s, %s, %s, %s, %s) RETURNING id;'
+insert_employee_string = 'INSERT INTO employees (name, address, phone_number, date, status) VALUES (%s, %s, %s, %s, %s) RETURNING id;'
 select_employees_string = 'SELECT * FROM employees;'
 find_employee_string = 'SELECT * FROM employees WHERE id=%s;'
 delete_employee_string = 'DELETE FROM employees WHERE id=%s;'
@@ -33,11 +33,15 @@ class EmployeeDAO:
         data = []
 
         row = cursor.fetchone()
+
         while row:
-            data.append()
+            data.append(row)
             row = cursor.fetchone()
 
-        return convert_to_list(data)
+        if(len(data) > 0):
+            return convert_to_list(data)
+        else:
+            return []
 
     def find(self, id):
         cursor = self.__conn.cursor()
@@ -50,7 +54,20 @@ class EmployeeDAO:
         self.__conn.commit()
 
 def convert_to_list(data):
-    return list(map(create_employee, data))
+
+    employees_list = []
+
+    for linha in data:
+        employees_list.append(create_employee(linha))
+
+    return employees_list
 
 def create_employee(tuple):
-    return Employee(tuple[1], tuple[2], tuple[3], tuple[4], tuple[5], id=tuple[0])
+    name = tuple[1]
+    address = tuple[2]
+    phone_number = tuple[3]
+    date = tuple[4]
+    status = tuple[5]
+    id = tuple[0]
+
+    return Employee(name, address, phone_number, date, status, id=id)
