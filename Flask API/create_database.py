@@ -30,7 +30,7 @@ create_table = '''
       CREATE TABLE employees (
             id serial,
             name varchar(500) NOT NULL,
-            adress varchar(500) NOT NULL,
+            address varchar(500) NOT NULL,
             phone_number varchar(20) NOT NULL,
             date date NOT NULL,
             status boolean NOT NULL,
