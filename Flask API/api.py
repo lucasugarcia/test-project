@@ -1,11 +1,12 @@
 from flask import Flask
 from employee_dao import EmployeeDAO
+from flask_cors import CORS, cross_origin
 import psycopg2
-
 
 app = Flask(__name__)
 app.secret_key = 'testeproject'
-
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app)
 
 db_user = ''
 db_password = ''
@@ -19,6 +20,7 @@ def index():
 
 
 @app.route('/api/employees', methods=['get',])
+@cross_origin()
 def list():
     list = employee_dao.list()
 
