@@ -6,6 +6,7 @@ insert_employee_string = 'INSERT INTO employees (name, address, phone_number, da
 select_employees_string = 'SELECT * FROM employees;'
 find_employee_string = 'SELECT * FROM employees WHERE id=%s;'
 delete_employee_string = 'DELETE FROM employees WHERE id=%s;'
+select_chart_string = 'SELECT date, COUNT(date) FROM employees GROUP BY date;'
 
 class EmployeeDAO:
     def __init__(self, conn):
@@ -40,6 +41,22 @@ class EmployeeDAO:
 
         if(len(data) > 0):
             return convert_to_list(data)
+        else:
+            return []
+
+    def chart_data(self):
+        cursor = self.__conn.cursor()
+        cursor.execute(select_chart_string)
+        data = []
+
+        row = cursor.fetchone()
+
+        while row:
+            data.append(row)
+            row = cursor.fetchone()
+
+        if (len(data) > 0):
+            return data
         else:
             return []
 

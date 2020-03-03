@@ -2,30 +2,48 @@ from flask import Flask
 from employee_dao import EmployeeDAO
 import psycopg2
 
+
 app = Flask(__name__)
 app.secret_key = 'testeproject'
 
+
 db_user = ''
 db_password = ''
-
 db = psycopg2.connect(dbname='testdb', user=db_user, password=db_password)
 employee_dao = EmployeeDAO(db)
+
 
 @app.route('/')
 def index():
     return 'Bem-Vind@!'
+
 
 @app.route('/api/employees', methods=['get',])
 def list():
     list = employee_dao.list()
 
     if(len(list) > 0):
-        return convert_to_json(list)
+        return convert_to_employee_json(list)
     else:
         return '[]'
 
-def convert_to_json(list):
 
+@app.route('/api/chart', methods=['get',])
+def chart():
+    list = employee_dao.chart_data()
+
+    if (len(list) > 0):
+        return convert_to_chart_json(list)
+    else:
+        return '[]'
+
+
+@app.route('/api/employees/<int:id>', methods=['delete',])
+def delete(id):
+    employee_dao.delete(id)
+
+
+def convert_to_employee_json(list):
     json = '['
 
     for employee in list:
@@ -37,7 +55,19 @@ def convert_to_json(list):
                 '","status":"' + str(employee.status) + '"},'
 
     json = json[:-1]
+    json += ']'
 
+    return json
+
+
+def convert_to_chart_json(list):
+    json = '['
+
+    for data in list:
+        json += '{"xField":"' + str(data[0]) + \
+                '","yField":"' + str(data[1]) + '"},'
+
+    json = json[:-1]
     json += ']'
 
     return json
