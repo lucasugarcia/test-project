@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Home from './Pages/Home/Home';
+import Manage from './Pages/Manage/Manage'; 
+import Chart from './Pages/Chart/Chart'; 
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'; 
 
@@ -9,6 +11,8 @@ ReactDOM.render(
     <BrowserRouter>
         <Switch>
             <Route path='/' exact={true} component={Home} />
+            <Route path='/manage' exact={true} component={Manage} />
+            <Route path='/chart' exact={true} component={Chart} />
         </Switch>
     </BrowserRouter>
     , document.getElementById('root'));

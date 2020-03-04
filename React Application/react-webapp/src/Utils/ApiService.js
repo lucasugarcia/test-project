@@ -1,10 +1,10 @@
 const ApiService = {
     ListEmployees: () => {
         return fetch('http://localhost:5000/api/employees')
-            .then(response => ApiService.TratarErros(response))
+            .then(response => ApiService.HandleErrors(response))
             .then(response => response.json());
     },
-    TratarErros: response => {
+    HandleErrors: response => {
         if (!response.ok)
             throw Error(response.responseText);
 
@@ -19,7 +19,12 @@ const ApiService = {
                     headers: { 'content-type': 'application/json' }
                 }
             )
-            .then(response => ApiService.TratarErros(response))
+            .then(response => ApiService.HandleErrors(response))
+            .then(response => response.json());
+    },
+    ChartData: () => {
+        return fetch('http://localhost:5000/api/chart')
+            .then(response => ApiService.HandleErrors(response))
             .then(response => response.json());
     }
 }

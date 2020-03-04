@@ -66,8 +66,8 @@ def convert_to_chart_json(list):
     json = '['
 
     for data in list:
-        json += '{"xField":"' + str(data[0]) + \
-                '","yField":"' + str(data[1]) + '"},'
+        json += '{"date":"' + str(data[0]) + \
+                '","amount":' + str(data[1]) + '},'
 
     json = json[:-1]
     json += ']'

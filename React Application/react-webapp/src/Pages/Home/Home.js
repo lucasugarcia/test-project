@@ -3,8 +3,8 @@ import './Home.css';
 import ApiService from '../../Utils/ApiService';
 import PopUp from '../../Utils/PopUp';
 import Header from '../../Components/Header/Header';
-import Table from '../../Components/Table/Table';
 import 'materialize-css/dist/css/materialize.min.css';
+import MUIDataTable from "mui-datatables";
 
 class Home extends Component {
 	constructor(props) {
@@ -12,25 +12,6 @@ class Home extends Component {
 		this.state = {
 			employees: []
 		};
-	}
-
-	deleteEmployee = id => {
-
-		const { employees } = this.state;
-
-		const updatedEmployees = employees.filter(employee => {
-			return employee.id !== id;
-		});
-
-		ApiService.DeleteEmployee(id)
-			.then(response => {
-				if (response.message === 'deleted') {
-					this.setState({ employees: [...updatedEmployees] });
-
-					PopUp.exibeMensagem('success', 'Employee removed!');
-				}
-			})
-			.catch(erro => PopUp.exibeMensagem('error', 'Error to remove employee!'));
 	}
 
 	componentDidMount() {
@@ -42,11 +23,28 @@ class Home extends Component {
 	}
 
 	render() {
+		const columns = ["name", "address", "phone_number", "date", "status"]
+		
+		const options = {
+			filterType: "dropdown",
+			responsive: "scroll",
+			downloadOptions: {
+				filterOptions: {
+					useDisplayedRowsOnly: "true"
+				}
+			}
+		};
+
 		return (
 			<Fragment>
 				<Header />
-				<div className="container mb-10">
-					<Table employees={this.state.employees} deleteEmployee={this.deleteEmployee} />
+				<div>
+				<MUIDataTable
+					title={"Employees"}
+					data={this.state.employees}
+					columns={columns}
+					options={options}
+				/>
 				</div>
 			</Fragment>
 		);
