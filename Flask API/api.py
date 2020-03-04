@@ -80,6 +80,29 @@ def new():
         return '{"message":"error"}'
 
 
+@app.route('/api/update', methods=['post',])
+@cross_origin()
+def update():
+    req = request.json
+    id = req['id']
+    name = req['name']
+    address = req['address']
+    phone_number = req['phone_number']
+    date = req['date']
+    status = req['status']
+
+    employee = Employee(name, address, phone_number, date, status, id=id)
+
+    employee_dao.save(employee)
+
+    return '{"id":"' + str(employee.id) + \
+            '","name":"' + employee.name + \
+            '","address":"' + employee.address + \
+            '","phone_number":"' + employee.phone_number + \
+            '","date":"' + str(employee.date) + \
+            '","status":"' + str(employee.status) + '"}'
+
+
 def convert_to_employee_json(list):
     json = '['
 

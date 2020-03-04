@@ -42,6 +42,20 @@ const ApiService = {
             .then(response => ApiService.HandleErrors(response))
             .then(response => response.json());
     },
+    UpdateEmployee: employee => {
+        return fetch
+            (
+                'http://localhost:5000/api/update',
+                {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: employee,
+                    mode: 'cors'
+                }
+            )
+            .then(response => ApiService.HandleErrors(response))
+            .then(response => response.json());
+    }
 }
 
 export default ApiService;

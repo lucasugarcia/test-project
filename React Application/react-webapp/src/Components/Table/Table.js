@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LinkWrapper from '../../Utils/LinkWrapper';
 
 const TableHead = () => {
     return (
@@ -33,11 +34,8 @@ const TableBody = props => {
                     </button>
                 </td>
                 <td>
-                    <button className="waves-effect waves-light indigo lighten-2 btn" onClick={() => {
-
-                    }}>
-                        Edit
-                    </button>
+                    <LinkWrapper className="waves-effect waves-light indigo lighten-2 btn" 
+                    to={{pathname: '/update', state: line}}>Edit</LinkWrapper>
                 </td>
             </tr>
         );
