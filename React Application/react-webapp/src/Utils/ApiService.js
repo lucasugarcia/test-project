@@ -26,7 +26,21 @@ const ApiService = {
         return fetch('http://localhost:5000/api/chart')
             .then(response => ApiService.HandleErrors(response))
             .then(response => response.json());
-    }
+    },
+    AddEmployee: employee => {
+        return fetch
+            (
+                'http://localhost:5000/api/new',
+                {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: employee,
+                    mode: 'cors'
+                }
+            )
+            .then(response => ApiService.HandleErrors(response))
+            .then(response => response.json());
+    },
 }
 
 export default ApiService;

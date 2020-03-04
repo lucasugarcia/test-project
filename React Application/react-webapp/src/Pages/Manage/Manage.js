@@ -5,6 +5,7 @@ import PopUp from '../../Utils/PopUp';
 import Header from '../../Components/Header/Header';
 import Table from '../../Components/Table/Table';
 import 'materialize-css/dist/css/materialize.min.css';
+import Form from '../../Components/Form/Form';
 
 class Manage extends Component {
 	constructor(props) {
@@ -33,6 +34,18 @@ class Manage extends Component {
 			.catch(erro => PopUp.exibeMensagem('error', 'Error to remove employee!'));
 	}
 
+	submitListener = employee => {
+
+		employee.date = formatDate(new Date())
+
+		ApiService.AddEmployee(JSON.stringify(employee))
+			.then(response => {
+				this.setState({ employees: [...this.state.employees, response] });
+				PopUp.showMessage('success', 'Success!');
+			})
+			.catch(erro => PopUp.showMessage('error', 'Error to add a new employee!'));
+	}
+
 	componentDidMount() {
 		ApiService.ListEmployees()
 			.then(response => {
@@ -46,11 +59,26 @@ class Manage extends Component {
 			<Fragment>
 				<Header />
 				<div className="container mb-10">
+					<Form submitListener={this.submitListener} />
 					<Table employees={this.state.employees} deleteEmployee={this.deleteEmployee} />
 				</div>
 			</Fragment>
 		);
 	}
+}
+
+function formatDate(date) {
+	var d = new Date(date),
+		month = '' + (d.getMonth() + 1),
+		day = '' + d.getDate(),
+		year = d.getFullYear();
+
+	if (month.length < 2)
+		month = '0' + month;
+	if (day.length < 2)
+		day = '0' + day;
+
+	return [year, month, day].join('-');
 }
 
 export default Manage;

@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, request
 from employee_dao import EmployeeDAO
+from models import Employee
 from flask_cors import CORS, cross_origin
 import psycopg2
 
@@ -43,6 +44,32 @@ def chart():
 @app.route('/api/employees/<int:id>', methods=['delete',])
 def delete(id):
     employee_dao.delete(id)
+
+@app.route('/api/new', methods=['post',])
+@cross_origin()
+def new():
+    req = request.json
+    name = req['name']
+    address = req['address']
+    phone_number = req['phone_number']
+    date = req['date']
+    status = req['status']
+
+    employee = Employee(name, address, phone_number, date, status)
+
+    print(employee.name, employee.address)
+
+    added_employee = employee_dao.save(employee)
+
+    if(added_employee.id):
+        return '{"id":"' + str(added_employee.id) + \
+                '","name":"' + employee.name + \
+                '","address":"' + employee.address + \
+                '","phone_number":"' + employee.phone_number + \
+                '","date":"' + str(employee.date) + \
+                '","status":"' + str(employee.status) + '"}'
+    else:
+        return '{"message":"error"}'
 
 
 def convert_to_employee_json(list):
