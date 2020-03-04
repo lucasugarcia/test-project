@@ -26,15 +26,15 @@ const TableBody = props => {
                 <td>{line.date}</td>
                 <td>{line.status}</td>
                 <td>
-                    <button className="waves-effect waves-light indigo lighten-2 btn" onClick={() => { 
-                        props.deleteEmployee(line.id) 
+                    <button type="submit" className="waves-effect waves-light indigo lighten-2 btn" onClick={() => {
+                        props.deleteEmployee(line.id)
                     }}>
                         Remove
                     </button>
                 </td>
                 <td>
-                    <button className="waves-effect waves-light indigo lighten-2 btn" onClick={() => { 
-                         
+                    <button className="waves-effect waves-light indigo lighten-2 btn" onClick={() => {
+
                     }}>
                         Edit
                     </button>

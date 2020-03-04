@@ -25,13 +25,11 @@ class Manage extends Component {
 
 		ApiService.DeleteEmployee(id)
 			.then(response => {
-				if (response.message === 'deleted') {
-					this.setState({ employees: [...updatedEmployees] });
+				this.setState({ employees: [...updatedEmployees] });
 
-					PopUp.exibeMensagem('success', 'Employee removed!');
-				}
+				PopUp.showMessage('success', 'Employee removed!');
 			})
-			.catch(erro => PopUp.exibeMensagem('error', 'Error to remove employee!'));
+			.catch(erro => PopUp.showMessage('error', 'Error to remove employee!'));
 	}
 
 	submitListener = employee => {

@@ -92,7 +92,7 @@ class Form extends Component {
                         <input placeholder="Phone Number" className="validate" id="phone_number" type="text" name="phone_number" value={phone_number} onChange={this.inputListener} />
                     </div>
                     <div className="input-field col s3">
-                        <input placeholder="Status" className="validate" id="status" type="text" name="status" value={status} onChange={this.inputListener} />
+                        <input placeholder="Status (True or False)" className="validate" id="status" type="text" name="status" value={status} onChange={this.inputListener} />
                     </div>
                 </div>
 

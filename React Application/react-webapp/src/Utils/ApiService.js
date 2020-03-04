@@ -13,10 +13,11 @@ const ApiService = {
     DeleteEmployee: id => {
         return fetch
             (
-                `http://localhost:5000/api/employees/${id}`,
-                {
-                    method: 'DELETE',
-                    headers: { 'content-type': 'application/json' }
+                `http://localhost:5000/api/employees`, {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: '{"id":"' + id + '"}',
+                    mode: 'cors'
                 }
             )
             .then(response => ApiService.HandleErrors(response))

@@ -6,8 +6,8 @@ import psycopg2
 
 app = Flask(__name__)
 app.secret_key = 'testeproject'
-app.config['CORS_HEADERS'] = 'Content-Type'
-cors = CORS(app)
+app.config['CORS_HEADERS'] = 'content-type'
+CORS(app, origins="http://127.0.0.1:3000", allow_headers=["content-type","Access-Control-Allow-Credentials"],supports_credentials=True)
 
 db_user = ''
 db_password = ''
@@ -16,6 +16,7 @@ employee_dao = EmployeeDAO(db)
 
 
 @app.route('/')
+@cross_origin()
 def index():
     return 'Bem-Vind@!'
 
@@ -32,6 +33,7 @@ def list():
 
 
 @app.route('/api/chart', methods=['get',])
+@cross_origin()
 def chart():
     list = employee_dao.chart_data()
 
@@ -41,9 +43,17 @@ def chart():
         return '[]'
 
 
-@app.route('/api/employees/<int:id>', methods=['delete',])
-def delete(id):
+@app.route('/api/employees', methods=['post',])
+@cross_origin()
+def delete():
+    req = request.json
+
+    id = req['id']
+
     employee_dao.delete(id)
+
+    return '[]'
+
 
 @app.route('/api/new', methods=['post',])
 @cross_origin()
@@ -56,8 +66,6 @@ def new():
     status = req['status']
 
     employee = Employee(name, address, phone_number, date, status)
-
-    print(employee.name, employee.address)
 
     added_employee = employee_dao.save(employee)
 
