@@ -75,6 +75,51 @@ class Form extends Component {
         }
     }
 
+    onInput = () => {
+        let fileInput = document.querySelector('input[type="file"]');
+        let file = fileInput.files[0];
+        let reader = new FileReader();
+        
+        const importFun = this.props.importFunction;
+
+        reader.onload = () => {
+            let result = String(reader.result)
+            
+            let employees = [];
+            
+            employees = result.split('\n');
+            
+            for (var i = 1; i < employees.length; i++) {
+                if (employees[i].type !== 'string') {
+                    
+                    const employee = employees[i];
+                    
+                    let attribs = [];
+                    
+                    attribs = employee.split(',');
+
+                    const name = attribs[0].replace('"', '').replace('\r', '').replace('\n', '');
+                    const address = attribs[1].replace('"', '').replace('\r', '').replace('\n', '');
+                    const phone_number = attribs[2].replace('"', '').replace('\r', '').replace('\n', '');
+                    const date = attribs[3].replace('"', '').replace('\r', '').replace('\n', '');
+                    const status = attribs[4].replace('"', '').replace('\r', '  ').replace('\n', '');
+
+                    const newEmployee = {
+                        name: name.replace('"', '').trim(),
+                        address: address.replace('"', '').replace('\r', '').replace('\n', '').trim(),
+                        phone_number: phone_number.replace('"', '').replace('\r', '').replace('\n', '').trim(),
+                        date: date.replace('"', '').replace('\r', '').replace('\n', '').trim(),
+                        status: status.replace('"', '').replace('\r', '').replace('\n', '').trim()
+                    };
+
+                    importFun(newEmployee);
+                }
+            }
+        }
+
+        reader.readAsText(file);
+    }
+
     render() {
 
         const { name, address, phone_number, status } = this.state;
@@ -97,7 +142,12 @@ class Form extends Component {
                 </div>
 
                 <button className="waves-effect waves-light indigo lighten-2 btn" type="button" onClick={this.submitForm}>Add</button>
-            </form>
+                <br />
+                or import a csv file with the employees clicking here:
+                <div align="center">
+                    <input type="file" onInput={this.onInput}></input>
+                </div>
+            </form >
         );
     }
 }

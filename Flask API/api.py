@@ -14,12 +14,10 @@ db_password = ''
 db = psycopg2.connect(dbname='testdb', user=db_user, password=db_password)
 employee_dao = EmployeeDAO(db)
 
-
 @app.route('/')
 @cross_origin()
 def index():
-    return 'Bem-Vind@!'
-
+    return 'Welcome!'
 
 @app.route('/api/employees', methods=['get',])
 @cross_origin()
@@ -31,7 +29,6 @@ def list():
     else:
         return '[]'
 
-
 @app.route('/api/chart', methods=['get',])
 @cross_origin()
 def chart():
@@ -41,7 +38,6 @@ def chart():
         return convert_to_chart_json(list)
     else:
         return '[]'
-
 
 @app.route('/api/employees', methods=['post',])
 @cross_origin()
@@ -53,7 +49,6 @@ def delete():
     employee_dao.delete(id)
 
     return '[]'
-
 
 @app.route('/api/new', methods=['post',])
 @cross_origin()
@@ -79,7 +74,6 @@ def new():
     else:
         return '{"message":"error"}'
 
-
 @app.route('/api/update', methods=['post',])
 @cross_origin()
 def update():
@@ -102,7 +96,6 @@ def update():
             '","date":"' + str(employee.date) + \
             '","status":"' + str(employee.status) + '"}'
 
-
 def convert_to_employee_json(list):
     json = '['
 
@@ -119,7 +112,6 @@ def convert_to_employee_json(list):
 
     return json
 
-
 def convert_to_chart_json(list):
     json = '['
 
@@ -131,6 +123,5 @@ def convert_to_chart_json(list):
     json += ']'
 
     return json
-
 
 app.run(debug=True)

@@ -12,6 +12,7 @@ conn.autocommit = True
 
 cursor = conn.cursor()
 
+# If you need drop database because it's already exists, uncomment next two lines
 #conn.cursor().execute("DROP DATABASE testdb;")
 #conn.commit()
 
@@ -40,9 +41,6 @@ create_table = '''
             PRIMARY KEY (id)
       );
       '''
-      #INSERT INTO employees (name, address, phone_number, date, status) VALUES ('lucas', 'Rua 1', '123456789', '2020-03-02', False);
-      #INSERT INTO employees (name, address, phone_number, date, status) VALUES ('gabriel', 'Rua 2', '987654321', '2020-03-03', True);
-      #'''
 
 cursor.execute(create_table)
 conn.commit()

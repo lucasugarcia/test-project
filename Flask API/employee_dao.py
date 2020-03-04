@@ -67,7 +67,7 @@ class EmployeeDAO:
         return create_employee(tuple)
 
     def delete(self, id):
-        self.__conn.cursor().execute(delete_employee_string, (id))
+        self.__conn.cursor().execute(delete_employee_string, (id,))
         self.__conn.commit()
 
 def convert_to_list(data):

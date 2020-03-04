@@ -16,7 +16,6 @@ class Manage extends Component {
 	}
 
 	deleteEmployee = id => {
-
 		const { employees } = this.state;
 
 		const updatedEmployees = employees.filter(employee => {
@@ -44,6 +43,15 @@ class Manage extends Component {
 			.catch(erro => PopUp.showMessage('error', 'Error to add a new employee!'));
 	}
 
+	importFunction = newEmployee => {
+		ApiService.AddEmployee(JSON.stringify(newEmployee))
+			.then(response => {
+				this.setState({ employees: [...this.state.employees, response] });
+				PopUp.showMessage('success', 'Success!');
+			})
+			.catch(erro => PopUp.showMessage('error', 'Error to add a new employee!'));
+	}
+
 	componentDidMount() {
 		ApiService.ListEmployees()
 			.then(response => {
@@ -57,7 +65,7 @@ class Manage extends Component {
 			<Fragment>
 				<Header />
 				<div className="container mb-10">
-					<Form submitListener={this.submitListener} />
+					<Form submitListener={this.submitListener} importFunction={this.importFunction} />
 					<Table employees={this.state.employees} deleteEmployee={this.deleteEmployee} />
 				</div>
 			</Fragment>
