@@ -93,3 +93,10 @@ Assim, seu navegador padrão será aberto com a página inicial da aplicação w
 
 ## Imagens do sistema
 
+![Tela inicial](https://user-images.githubusercontent.com/33785215/75932169-8b44e280-5e55-11ea-9f19-0c8bc7f08746.png)
+
+![Tela de gestão](https://user-images.githubusercontent.com/33785215/75932229-afa0bf00-5e55-11ea-8f37-c1afe35b5a9c.png)
+
+![Tela de edição de um funcionário](https://user-images.githubusercontent.com/33785215/75932252-bdeedb00-5e55-11ea-9ad8-4031c25ebb0e.png)
+
+![Tela do gráfico](https://user-images.githubusercontent.com/33785215/75932272-c9420680-5e55-11ea-9f4e-2e4bd919899b.png)
